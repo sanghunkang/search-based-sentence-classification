@@ -1,6 +1,11 @@
 from datetime import datetime
 from elasticsearch import Elasticsearch
 
+
+import random
+
+SIZE_OF_NEIGHBORHOOD = 100
+
 es = Elasticsearch()
 
 
@@ -26,18 +31,35 @@ for hit in res['hits']['hits']:
 
 # Search
 # Find neighbourhood
+neighborhood = es.search(index="test-index", body={"query": query})["hits"]["hits"][:SIZE_OF_NEIGHBORHOOD]
+for hit in neighborhood:
+    # print(hit["_source"])
+    print(hit)
     # input: expectable patterns which annotators expect
     # collect N~100 for each class
 
 # Label
+actual_n = len(neighborhood)
 # For each class
-    # Select subsets
-    # 10
-    #   4 of high ranks 
-    #   3 of middle ranks
-    #   3 of low ranks
+subset = []
+# Select subsets summing up to 10
+#   4 of high ranks 
+neighbourhood_of_high_rank = neighborhood[:int(actual_n/3*1)]
+subset.append(**random.choices(neighbourhood_of_high_rank, k=4))
 
-    # Prompt IN or OUT (or NOT SURE)
+#   3 of middle ranks
+neighborhood_middle_ranks = neighborhood[int(actual_n/3*1):int(actual_n/3*2)]
+subset.append(**random.choices(neighbourhood_of_high_rank, k=3))
+
+#   3 of low ranks
+neighborhood_low_ranks = neighborhood[int(actual_n/3*2):]
+subset.append(**random.choices(neighbourhood_of_high_rank, k=3))
+    
+# Prompt IN or OUT (or NOT SURE)
+print("____")
+print(actual_n)
+for elem in subset:
+    print(elem)
 
 # Propagate
 # For each class
