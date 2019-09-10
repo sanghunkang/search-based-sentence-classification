@@ -44,7 +44,7 @@ actual_n = len(neighborhood)
 subset = []
 # Select subsets summing up to 10
 #   4 of high ranks 
-neighbourhood_of_high_rank = neighborhood[:int(actual_n/3*1)]
+neighborhood_of_high_rank = neighborhood[:int(actual_n/3*1)]
 subset.append(**random.choices(neighbourhood_of_high_rank, k=4))
 
 #   3 of middle ranks
@@ -61,15 +61,3 @@ print(actual_n)
 for elem in subset:
     print(elem)
 
-# Propagate
-# For each class
-    # if either of ratio > 0.6(arbitrarily chosen value)  
-    #   -> propagte label for the entire neighbourhood
-    # else
-    #   -> only use the existing labels
-
-
-
-# Automated labelling
-    # for each candidate
-    # label 1, l2, l3 ... ln = Lambda:example -> [1, 0, 1, -1 .. 0]
